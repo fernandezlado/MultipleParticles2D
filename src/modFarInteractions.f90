@@ -54,7 +54,7 @@ CONTAINS
   SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs)
 
     TYPE(PairwiseFarInteraction)::this
-    TYPE(Obstacle)::tar_obs,src_obs
+    TYPE(Obstacle)::target_obs,source_obs
 
 
     this % target_obs = target_obs
