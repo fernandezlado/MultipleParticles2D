@@ -61,8 +61,8 @@ CONTAINS
     this % source_obs = source_obs
 
 
-    ALLOCATE ( this % mat_SL ( 0 : target_obs % num_dis - 1 , 0 : source_obs -1 ) )
-    ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs -1 ) )
+    ALLOCATE ( this % mat_SL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
+    ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
 
 
     CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL )
