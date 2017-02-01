@@ -9,7 +9,7 @@ PROGRAM MultipleParticle
   IMPLICIT NONE
 
   INTEGER::j,l
-  type(Obstacle)::obs1,obs2
+  type(Obstacle)::obs_1,obs_2
   type(intOperator)::op
   type(FarInteractions)::farInter_obs1,farInter_obs2
   
