@@ -13,7 +13,7 @@ MODDIR=mod
 BINDIR=bin
 
 #OBJECTS FILES TO COMPILE
-OBJ = $(CURDIR)/$(OBJDIR)/main.o $(CURDIR)/$(OBJDIR)/modObstacle.o $(CURDIR)/$(OBJDIR)/modOperators.o $(CURDIR)/$(OBJDIR)/modSpecialFunctions.o $(CURDIR)/$(OBJDIR)/modMathConstants.o
+OBJ = $(CURDIR)/$(OBJDIR)/main.o $(CURDIR)/$(OBJDIR)/modObstacle.o $(CURDIR)/$(OBJDIR)/modOperators.o $(CURDIR)/$(OBJDIR)/modSpecialFunctions.o $(CURDIR)/$(OBJDIR)/modMathConstants.o $(CURDIR)/$(OBJDIR)/modFarInteractions.o
 
 #OUTPUT FILENAME
 fileOut=MultipleParticles
@@ -36,6 +36,9 @@ $(CURDIR)/$(OBJDIR)/modSpecialFunctions.o: $(CURDIR)/$(SRCDIR)/modSpecialFunctio
 
 $(CURDIR)/$(OBJDIR)/modMathConstants.o: $(CURDIR)/$(SRCDIR)/modMathConstants.f90
 	$(FC) -c $(CURDIR)/$(SRCDIR)/modMathConstants.f90 -o $(CURDIR)/$(OBJDIR)/modMathConstants.o -module $(CURDIR)/$(MODDIR)
+
+$(CURDIR)/$(OBJDIR)/modFarInteractions.o: $(CURDIR)/$(SRCDIR)/modFarInteractions.f90 $(CURDIR)/$(OBJDIR)/modMathConstants.o $(CURDIR)/$(OBJDIR)/modObstacles.o
+	$(FC) -c $(CURDIR)/$(SRCDIR)/modFarInteractions.f90 -o $(CURDIR)/$(OBJDIR)/modFarInteractions.o -module $(CURDIR)/$(MODDIR)
 
 
 clean:
