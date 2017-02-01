@@ -29,7 +29,7 @@ MODULE modFarInteractions
 CONTAINS
 
 
-    SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs)
+    SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs,k)
 
       TYPE(PairwiseFarInteraction)::this
       TYPE(Obstacle)::target_obs,source_obs
@@ -43,7 +43,7 @@ CONTAINS
       ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
 
       
-      CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL )
+      CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL ,k)
     
     
     END SUBROUTINE createPairwiseFarInteraction
