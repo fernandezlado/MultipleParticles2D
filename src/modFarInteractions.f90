@@ -20,7 +20,7 @@ MODULE modFarInteractions
   TYPE FarInteractions
 
      TYPE(Obstacle)::obs
-     TYPE(PairwiseFarInteracion),DIMENSION(:),ALLOCATABLE::neighbor_interactions
+     TYPE(PairwiseFarInteraction),DIMENSION(:),ALLOCATABLE::neighbor_interactions
      INTEGER::N_neigh
      
   END TYPE FarInteractions
