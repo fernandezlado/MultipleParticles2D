@@ -8,37 +8,67 @@ MODULE modFarInteractions
   IMPLICIT NONE
 
   
+  TYPE PairwiseFarInteraction
+
+     TYPE(Obstacle)::target_obs,source_obs
+     COMPLEX(8),DIMENSION(:,:),ALLOCATABLE::mat_SL
+     COMPLEX(8),DIMENSION(:,:),ALLOCATABLE::mat_DL     
+     
+  END TYPE PairwiseFarInteraction
+
+  
   TYPE FarInteractions
 
      TYPE(Obstacle)::obs
-     COMPLEX(8),DIMENSION(:,:,:),ALLOCATABLE::mat_SL
-     COMPLEX(8),DIMENSION(:,:,:),ALLOCATABLE::mat_DL
+     TYPE(PairwiseFarInteracions),DIMENSION(:),ALLOCATABLE::neighbor_interactions
+     INTEGER::N_neigh
      
   END TYPE FarInteractions
 
   
 CONTAINS
 
-  
+
   SUBROUTINE createFarInteractions (this,self_obs,far_obs)
 
     TYPE(FarInteractions)::this
     TYPE(Obstacle)::self_obs
-    TYPE(Obstacle),DIMENSION(:)::far_obs
-
-    INTEGER::N_obs,j
-
+    TYPE(Obstacle),DIMENSION(:)::neighbor_obs
     
-    this % obs = self_obs    
+    INTEGER::j
 
-    DO j=1,N_obs
-       CALL createInteractionMatrices ( this % obs, far_obs(j) , this % mat_SL, this % mat_DL )
-    END DO
-   
+    ALLOCATE ( this % neighbor_inter ( 0 : size (neighbor_obs) - 1 ) )
+    
+    this % obs = self_obs
+
+    FORALL ( j = 0  : SIZE( neighbor_obs ) -1 )
+       CALL createPairwiseFarInteraction( this % neighbor_inter ( j ), self_obs, neighbor_obs (j) )
+    END FORALL
+
     
   END SUBROUTINE createFarInteractions
 
 
+  SUBROUTINE createPairwiseFarInteraction(this,tar_obs,src_obs)
+
+    TYPE(PairwiseFarInteraction)::this
+    TYPE(Obstacle)::obs_tr,obs_src
+
+
+    this % target_obs = tar_obs
+    this % source_obs = src_obs
+
+
+    ALLOCATE ( this % mat_SL ( 0 : tar_obs % num_dis - 1 , 0 : src_obs -1 ) )
+    ALLOCATE ( this % mat_DL ( 0 : tar_obs % num_dis - 1 , 0 : src_obs -1 ) )
+
+
+    CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL )
+    
+    
+  END SUBROUTINE createPairwiseFarInteraction
+
+  
   SUBROUTINE createInteractionMatrices ( target_obs, source_obs, mat_SL, mat_DL )
 
     TYPE(Obstacle)::target_obs,source_obs
