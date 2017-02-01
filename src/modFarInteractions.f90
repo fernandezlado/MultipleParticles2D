@@ -1,5 +1,6 @@
 MODULE modFarInteractions
-
+  
+  USE modSpecialFunctions
   USE modObstacle
   USE modMathConstants
   
@@ -31,7 +32,7 @@ CONTAINS
     this % obs = self_obs    
 
     DO j=1,N_obs
-       CALL createInteractionMatrices ( this % obs, this % far_obs(j) , this % mat_SL, this % mat_DL )
+       CALL createInteractionMatrices ( this % obs, far_obs(j) , this % mat_SL, this % mat_DL )
     END DO
    
     
@@ -57,10 +58,10 @@ CONTAINS
 
 
     diff_X = TRANSPOSE ( SPREAD ( target_obs % C_X , 1, source_obs % num_dis) ) &
-         -SPREAD ( source_obs % C_X , target_obs % num_dis)
+         -SPREAD ( source_obs % C_X , 1 , target_obs % num_dis)
     
     diff_Y = TRANSPOSE ( SPREAD ( target_obs % C_Y , 1, source_obs % num_dis) ) &
-         -SPREAD ( source_obs % C_Y , target_obs % num_dis)
+         -SPREAD ( source_obs % C_Y , 1 , target_obs % num_dis)
 
     dist = SQRT ( diff_X**2 + diff_Y**2 )
 

@@ -37,7 +37,7 @@ $(CURDIR)/$(OBJDIR)/modSpecialFunctions.o: $(CURDIR)/$(SRCDIR)/modSpecialFunctio
 $(CURDIR)/$(OBJDIR)/modMathConstants.o: $(CURDIR)/$(SRCDIR)/modMathConstants.f90
 	$(FC) -c $(CURDIR)/$(SRCDIR)/modMathConstants.f90 -o $(CURDIR)/$(OBJDIR)/modMathConstants.o -module $(CURDIR)/$(MODDIR)
 
-$(CURDIR)/$(OBJDIR)/modFarInteractions.o: $(CURDIR)/$(SRCDIR)/modFarInteractions.f90 $(CURDIR)/$(OBJDIR)/modMathConstants.o $(CURDIR)/$(OBJDIR)/modObstacle.o
+$(CURDIR)/$(OBJDIR)/modFarInteractions.o: $(CURDIR)/$(SRCDIR)/modFarInteractions.f90 $(CURDIR)/$(OBJDIR)/modMathConstants.o $(CURDIR)/$(OBJDIR)/modObstacle.o $(CURDIR)/$(OBJDIR)/modSpecialFunctions.o
 	$(FC) -c $(CURDIR)/$(SRCDIR)/modFarInteractions.f90 -o $(CURDIR)/$(OBJDIR)/modFarInteractions.o -module $(CURDIR)/$(MODDIR)
 
 
