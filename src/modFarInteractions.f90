@@ -33,7 +33,8 @@ CONTAINS
 
       TYPE(PairwiseFarInteraction)::this
       TYPE(Obstacle)::target_obs,source_obs
-
+      REAL(8)::k
+      
 
       this % target_obs = target_obs
       this % source_obs = source_obs
