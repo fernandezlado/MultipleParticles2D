@@ -20,7 +20,7 @@ MODULE modFarInteractions
   TYPE FarInteractions
 
      TYPE(Obstacle)::obs
-     TYPE(PairwiseFarInteracions),DIMENSION(:),ALLOCATABLE::neighbor_interactions
+     TYPE(PairwiseFarInteracion),DIMENSION(:),ALLOCATABLE::neighbor_interactions
      INTEGER::N_neigh
      
   END TYPE FarInteractions
@@ -29,7 +29,7 @@ MODULE modFarInteractions
 CONTAINS
 
 
-  SUBROUTINE createFarInteractions (this,self_obs,far_obs)
+  SUBROUTINE createFarInteractions (this,self_obs,neighbor_obs)
 
     TYPE(FarInteractions)::this
     TYPE(Obstacle)::self_obs
@@ -37,30 +37,32 @@ CONTAINS
     
     INTEGER::j
 
-    ALLOCATE ( this % neighbor_inter ( 0 : size (neighbor_obs) - 1 ) )
+    ALLOCATE ( this % neighbor_interactions ( 0 : size (neighbor_obs) - 1 ) )
     
     this % obs = self_obs
 
-    FORALL ( j = 0  : SIZE( neighbor_obs ) -1 )
-       CALL createPairwiseFarInteraction( this % neighbor_inter ( j ), self_obs, neighbor_obs (j) )
-    END FORALL
+    DO j = 0 , SIZE ( neighbor_obs )
+       
+       CALL createPairwiseFarInteraction( this % neighbor_interactions ( j ), self_obs, neighbor_obs (j) )
+       
+    END DO
 
     
   END SUBROUTINE createFarInteractions
 
 
-  SUBROUTINE createPairwiseFarInteraction(this,tar_obs,src_obs)
+  SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs)
 
     TYPE(PairwiseFarInteraction)::this
-    TYPE(Obstacle)::obs_tr,obs_src
+    TYPE(Obstacle)::tar_obs,src_obs
 
 
-    this % target_obs = tar_obs
-    this % source_obs = src_obs
+    this % target_obs = target_obs
+    this % source_obs = source_obs
 
 
-    ALLOCATE ( this % mat_SL ( 0 : tar_obs % num_dis - 1 , 0 : src_obs -1 ) )
-    ALLOCATE ( this % mat_DL ( 0 : tar_obs % num_dis - 1 , 0 : src_obs -1 ) )
+    ALLOCATE ( this % mat_SL ( 0 : target_obs % num_dis - 1 , 0 : source_obs -1 ) )
+    ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs -1 ) )
 
 
     CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL )
@@ -69,14 +71,15 @@ CONTAINS
   END SUBROUTINE createPairwiseFarInteraction
 
   
-  SUBROUTINE createInteractionMatrices ( target_obs, source_obs, mat_SL, mat_DL )
+  SUBROUTINE createInteractionMatrices ( target_obs, source_obs, mat_SL, mat_DL , k)
 
     TYPE(Obstacle)::target_obs,source_obs
     COMPLEX(8),DIMENSION(:,:)::mat_SL,mat_DL
-
+    REAL(8)::k
+    
     REAL(8),DIMENSION(:,:),ALLOCATABLE::diff_X,diff_Y,dist
     REAL(8),DIMENSION(:,:),ALLOCATABLE::X_p,Y_p,dS
-
+    
 
     ALLOCATE ( diff_X ( 0:target_obs % num_dis -1, 0:source_obs % num_dis -1 ) )
     ALLOCATE ( diff_Y ( 0:target_obs % num_dis -1, 0:source_obs % num_dis -1 ) )
