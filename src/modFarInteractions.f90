@@ -93,7 +93,7 @@ CONTAINS
     ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
       
       
-    CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL ,k)
+    CALL createInteractionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL ,k)
     
     
   END SUBROUTINE createPairwiseFarInteraction
