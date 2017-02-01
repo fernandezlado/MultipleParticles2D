@@ -28,28 +28,7 @@ MODULE modFarInteractions
   
 CONTAINS
 
-
-    SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs,k)
-
-      TYPE(PairwiseFarInteraction)::this
-      TYPE(Obstacle)::target_obs,source_obs
-      REAL(8)::k
-      
-
-      this % target_obs = target_obs
-      this % source_obs = source_obs
-
-
-      ALLOCATE ( this % mat_SL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
-      ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
-
-      
-      CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL ,k)
-    
-    
-    END SUBROUTINE createPairwiseFarInteraction
   
-
     SUBROUTINE createInteractionMatrices ( target_obs, source_obs, mat_SL, mat_DL , k)
 
       TYPE(Obstacle)::target_obs,source_obs
@@ -96,6 +75,28 @@ CONTAINS
 
       
   END SUBROUTINE createInteractionMatrices
+
+
+
+  SUBROUTINE createPairwiseFarInteraction(this,target_obs,source_obs,k)
+    
+    TYPE(PairwiseFarInteraction)::this
+    TYPE(Obstacle)::target_obs,source_obs
+    REAL(8)::k
+    
+    
+    this % target_obs = target_obs
+    this % source_obs = source_obs
+      
+      
+    ALLOCATE ( this % mat_SL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
+    ALLOCATE ( this % mat_DL ( 0 : target_obs % num_dis - 1 , 0 : source_obs % num_dis - 1 ) )
+      
+      
+    CALL createIntearctionMatrices ( this % target_obs, this % source_obs, this % mat_SL, this % mat_DL ,k)
+    
+    
+  END SUBROUTINE createPairwiseFarInteraction
 
   
   SUBROUTINE createFarInteractions (this,self_obs,neighbor_obs,k)
