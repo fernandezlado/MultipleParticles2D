@@ -1,5 +1,6 @@
 PROGRAM MultipleParticle
 
+  USE modFarInteractions
   USE modSpecialFunctions
   USE modObstacle
   USE modOperators
